@@ -68,7 +68,7 @@ class LedStrip():
             time.sleep_ms(delay)
 
     def wrong_answer_animation(self, color, delay):
-        for i in range(self.number_of_leds/2):
+        for i in range(math.floor(self.number_of_leds/2)):
             self.set_pixel_color(i, color)
             self.show()
             time.sleep_ms(delay)
