@@ -8,11 +8,11 @@ class LedStrip():
         self.number_of_leds = math.floor(band_length_in_meters * leds_per_meter)
         self.np = neopixel.NeoPixel(machine.Pin(pin), self.number_of_leds)
 
-    def set_pixel_color(self, index, color):
-        self.np[index] = color
+    def set_pixel_color(self, index, color, intensity=1):
+        self.np[index] = color * intensity
     
-    def set_strip_color(self, color):
-        self.np.fill(color)
+    def set_strip_color(self, color, intensity=1):
+        self.np.fill(color*intensity)
     
     def show(self):
         self.np.write()
