@@ -51,7 +51,6 @@ class LedStrip():
 
     def gradually_turn_off_with_gradual_intensity(self, delay, color, intensityStep):
         ledsToRefresh = []
-        index = 0
         for i in range(self.number_of_leds):
             ledsToRefresh.append({
                 "id": i,
