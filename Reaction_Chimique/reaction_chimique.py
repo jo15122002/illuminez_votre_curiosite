@@ -19,16 +19,31 @@ class LedStrip():
     def show(self):
         self.np.write()
     
-    def gradually_turn_on(self, color, delay):
+    def gradually_turn_on(self, color, delay, intensity = 1):
         for i in range(self.number_of_leds):
-            for j in range(i+1):
-                self.set_pixel_color(j, color)
+            self.set_pixel_color(i, color)
             self.show()
             time.sleep_ms(delay)
 
     def gradually_turn_off(self, delay):
-        for i in range(self.number_of_leds):
-            for j in range(i+1):
-                self.set_pixel_color(j, (0,0,0))
+        for i in range(self.number_of_leds):    
+            self.set_pixel_color(self.number_of_leds - i, (0,0,0))
             self.show()
             time.sleep_ms(delay)
+
+    def gradually_turn_on_with_gradual_intensity(self, color, delay, intensityStep):
+        ledsToRefresh = []
+        index = 0
+        for i in range(self.number_of_leds):
+            ledsToRefresh.append({
+                "id": i,
+                "intensity": 0 - i*intensityStep,
+                color: color
+            })
+        while(ledsToRefresh[self.number_of_leds]["intensity"] < 1):
+            for led in ledsToRefresh:
+                self.set_pixel_color(led["id"], led["color"], led["intensity"])
+                led["intensity"] += intensityStep
+            self.show()
+            time.sleep_ms(delay)
+
