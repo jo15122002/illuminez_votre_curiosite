@@ -44,6 +44,8 @@ class LedStrip():
             for led in ledsToRefresh:
                 self.set_pixel_color(led["id"], led["color"], led["intensity"])
                 led["intensity"] += intensityStep
+                if(led["intensity"] > 1):
+                    led["intensity"] = 1
             self.show()
             time.sleep_ms(delay)
 
@@ -60,6 +62,8 @@ class LedStrip():
             for led in ledsToRefresh:
                 self.set_pixel_color(led["id"], led["color"], led["intensity"])
                 led["intensity"] -= intensityStep
+                if(led["intensity"] < 0):
+                    led["intensity"] = 0
             self.show()
             time.sleep_ms(delay)
 
