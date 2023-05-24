@@ -10,6 +10,7 @@ class LedStrip():
         self.np = neopixel.NeoPixel(machine.Pin(pin), self.number_of_leds)
         self.button = machine.Pin(button_pin, machine.Pin.IN, machine.Pin.PULL_UP)
         self.lastTick = time.ticks_ms()
+        self.is_right_answer = True
 
         self.ledsOn = []
         self.ledsOff = []
@@ -118,22 +119,20 @@ class LedStrip():
     def adaptive_gradually_turn_on(self, color, delay, intensityStep):
         if(time.ticks_ms() - self.lastTick > 10):
             if(self.button.value() == 0):
-                # print("button pressed")
-                # print(len(self.ledsOff))
                 if(len(self.ledsOff) > 0):
-                    led = self.ledsOff[0]
-                    led["intensity"] += intensityStep
-                    led["color"] = color
-                    self.set_pixel_color(led["id"], led["color"], led["intensity"])
-                    self.show()
-                    # print(led["intensity"])
+                    if(self.is_right_answer or (len(self.ledsOff) > self.number_of_leds/2 and not self.is_right_answer)):
+                        led = self.ledsOff[0]
+                        led["intensity"] += intensityStep
+                        led["color"] = color
+                        self.set_pixel_color(led["id"], led["color"], led["intensity"])
+                        self.show()
 
-                    if(led not in self.ledsOn):
-                        self.ledsOn.append(led)
+                        if(led not in self.ledsOn):
+                            self.ledsOn.append(led)
 
-                    if(led["intensity"] >= 1):
-                        self.ledsOff.pop(0)
-                time.sleep_ms(delay)
+                        if(led["intensity"] >= 1):
+                            self.ledsOff.pop(0)
+                    time.sleep_ms(delay)
             else:
                 if(len(self.ledsOn) > 0):
                     led = self.ledsOn[len(self.ledsOn)-1]
