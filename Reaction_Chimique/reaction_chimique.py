@@ -18,6 +18,7 @@ class LedStrip():
         self.lastLedsBand = lastLedsBand
         self.fishPart = fishPart
         self.stripColor = (255,255,255)
+        self.isLit = False
 
         if(self.extraLedBand != None):
             self.offset = self.extraLedBand.number_of_leds - self.extraLeds
@@ -99,11 +100,12 @@ class LedStrip():
                 "intensity": 0 - i*intensityStep,
                 "color": color
             })
-        while(ledsToRefresh[self.number_of_leds-1]["intensity"] < 0.04):
+        while(ledsToRefresh[self.number_of_leds-1]["intensity"] < 1):
             for led in ledsToRefresh:
                 led["intensity"] += intensityStep
                 self.set_pixel_color(led["id"], led["color"], led["intensity"])
             self.show()
+            self.isLit = True
             time.sleep_ms(delay)
 
     def gradually_turn_off_with_gradual_intensity(self, delay, color, intensityStep):
@@ -154,7 +156,7 @@ class LedStrip():
             time.sleep_ms(delay)
     
     def adaptive_gradually_turn_on(self, color, delay, intensityStep):
-        maxIntensity = 0.04
+        maxIntensity = 1
         if(time.ticks_ms() - self.lastTick > 10):
             if(self.button.value() == 0):
                 if(len(self.ledsOff) > 0 ):
@@ -195,8 +197,9 @@ class LedStrip():
 
                     if(led["intensity"] >= maxIntensity):
                         self.lastLedsOff.pop(0)
-                elif(self.is_right_answer):
-                    self.fishPart.gradually_turn_on_with_gradual_intensity(color, delay, intensityStep)
+                elif(self.is_right_answer and self.fishPart.isLit == False):
+                    self.fishPart.stripColor = color
+                    self.fishPart.gradually_turn_on_with_gradual_intensity(color, 7, intensityStep)
                     
                 time.sleep_ms(delay)
             else:
@@ -293,62 +296,82 @@ def randomiseAnswers(ledStrips, upperFish, lowerFish):
 
     return ledStripsDone
 
-
 ledStrips = randomiseAnswers(ledStrips, upperFish, lowerFish)
 
-# for led in ledStrips:
-#     led.stripColor = (255,0,0)
-
 while True:
-    # upperFish.gradually_turn_on((255,0,0), 10, 0.1)
-    # lowerFish.gradually_turn_on((255,0,0), 10, 0.1)
     for led in ledStrips:
-        led.adaptive_gradually_turn_on(led.stripColor, 5, 0.01)
-    # ledStrips[1].is_right_answer = True
-    # ledStrips[1].adaptive_gradually_turn_on(ledStrips[0].stripColor, 5, 0.01)
+        led.adaptive_gradually_turn_on(led.stripColor, 5, 0.1)
 
-    # ledStrips[2].is_right_answer = True
-    # ledStrips[2].adaptive_gradually_turn_on(ledStrips[0].stripColor, 5, 0.01)
+        if(upperFish.isLit and lowerFish.isLit):
+            print("both lit")
+            ur, ug, ub = upperFish.stripColor
+            lr, lg, lb = lowerFish.stripColor
+            while ur < 255 or ug < 255 or ub < 255 or lr < 255 or lg < 255 or lb < 255:
+                for led in ledStrips:
+                    led.adaptive_gradually_turn_on(led.stripColor, 5, 0.1)
+                ur += 1
+                ug += 1
+                ub += 1
+                lr += 1
+                lg += 1
+                lb += 1
 
-    # ledStrips[3].is_right_answer = True
-    # ledStrips[3].adaptive_gradually_turn_on(ledStrips[0].stripColor, 5, 0.01)
+                if(ur > 255):
+                    ur = 255
+                if(ug > 255):
+                    ug = 255
+                if(ub > 255):
+                    ub = 255
+                if(lr > 255):
+                    lr = 255
+                if(lg > 255):
+                    lg = 255
+                if(lb > 255):
+                    lb = 255
 
-    # ledStrips[0].is_right_answer = True
-    # ledStrips[0].adaptive_gradually_turn_on(ledStrips[1].stripColor, 5, 0.01)
+                upperFish.set_strip_color((ur,ug,ub))
+                lowerFish.set_strip_color((lr,lg,lb))
+                upperFish.show()
+                lowerFish.show()
+                time.sleep(0.005)
 
+            timeStart = time.ticks_ms()
 
-# ledStrips.append(upperFish)
-# ledStrips.append(lowerFish)
-# for led in ledStrips:
-#     led.set_strip_color(led.stripColor)
-#     led.show()
+            while time.ticks_ms() - timeStart < 5000:
+                for led in ledStrips:
+                    led.adaptive_gradually_turn_on(led.stripColor, 5, 0.1)
+            
+            for led in ledStrips:
+                led.is_right_answer = False
+                led.set_strip_color((0,0,0))
+                led.show()
+            upperFish.set_strip_color((0,0,0))
+            lowerFish.set_strip_color((0,0,0))
+            upperFish.show()
+            lowerFish.show()
+            upperFish.isLit = False
+            lowerFish.isLit = False
 
-# intensity = 0.04
-# color = (255,255,255)
+            ledStrips = []
+            upperFish = LedStrip(22, 20, 0)
+            lowerFish = LedStrip(23, 19, 0)
 
-# ledStrips[1].set_strip_color(color, intensity)
-# ledStrips[1].show()
+            led6 = LedStrip(33, 29, 19, 0)
+            ledStrips.append(led6)
 
-# ledStrips[0].set_strip_color(color, intensity)
-# ledStrips[0].show()
+            led1 = LedStrip(12, 26, 4, 0, None, led6)
+            ledStrips.append(led1)
 
-# ledStrips[2].set_strip_color(color, intensity)
-# ledStrips[2].show()
+            led2 = LedStrip(14, 6, 16, 12, led1, led6)
+            ledStrips.append(led2)
 
-# ledStrips[3].set_strip_color(color, intensity)
-# ledStrips[3].show()
+            led3 = LedStrip(27, 6, 17, 4, led1, led6)
+            ledStrips.append(led3)
 
-# ledStrips[4].set_strip_color(color, intensity)
-# ledStrips[4].show()
+            led4 = LedStrip(26, 6, 18, 11, led6, led6)
+            ledStrips.append(led4)
 
-# ledStrips[5].set_strip_color(color, intensity)
-# ledStrips[5].show()
+            led5 = LedStrip(25, 6, 5, 3, led6, led6)
+            ledStrips.append(led5)
 
-# upperFish.set_strip_color(color, intensity)
-# upperFish.show()
-
-# lowerFish.set_strip_color(color, intensity)
-# lowerFish.show()
-
-# ledStrips[2].set_strip_color((255, 0, 0))
-# ledStrips[2].show()
+            ledStrips = randomiseAnswers(ledStrips, upperFish, lowerFish)
