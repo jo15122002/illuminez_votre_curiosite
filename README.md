@@ -1,4 +1,4 @@
-# Illuminate Your Curiosity
+# Illuminez votre curiosité
 
 This repository contains the source code for the "Illuminate Your Curiosity" project. The project is structured into several folders and files, each having a specific role in the overall functioning of the project.
 
