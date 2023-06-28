@@ -66,7 +66,7 @@ To use this project, you will need to send the program to the ESP32:
 
 ## 
 
-2. Set Up PyMakr
+## 2. Set Up PyMakr
 
 1. **Install the PyMakr extension**: Open Visual Studio Code, click on the extensions icon in the sidebar, search for "PyMakr" and click "Install".
 
