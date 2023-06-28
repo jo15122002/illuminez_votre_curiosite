@@ -1,85 +1,84 @@
-# Illuminez votre curiosité
+# Illuminate Your Curiosity
 
-Ce dépôt contient le code source pour le projet "Illuminez votre curiosité". Le projet est structuré en plusieurs dossiers et fichiers, chacun ayant un rôle spécifique dans le fonctionnement global du projet.
+This repository contains the source code for the "Illuminate Your Curiosity" project. The project is structured into several folders and files, each having a specific role in the overall functioning of the project.
 
+## Project Structure
 
-## Structure du projet
+Here is a description of the project structure:
 
-Voici une description de la structure du projet :
+- **ESP32/Activite1**: This folder contains the Python scripts for the ESP32 microcontroller. It includes the `boot.py`, `main.py` files. `main.py` is the file that will be sent to the ESP32.
 
-- **ESP32/Activite1** : Ce dossier contient les scripts Python pour le microcontrôleur ESP32. Il comprend les fichiers `boot.py`, `main.py`. `main.py` est le fichier qui sera envoyé à l'ESP32.
+- **Proximity_sensor**: This folder contains the Python scripts for the proximity sensor for the scenographic elements. It includes the `meduse.py`, `poulpe.py`, and `proximity_sensor.py` files.
 
-- **Proximity_sensor** : Ce dossier contient les scripts Python pour le capteur de proximité pour les éléments de scénographie. Il comprend les fichiers `meduse.py`, `poulpe.py` et `proximity_sensor.py`.
-
-- **Reaction_Chimique** : Ce dossier contient les scripts Python pour l'activité 1. Il comprend le fichier `reaction_chimique.py`.
-
+- **Reaction_Chimique**: This folder contains the Python scripts for Activity 1. It includes the `reaction_chimique.py` file.
 
 ## Installation
 
-Pour installer et exécuter ce projet, vous aurez besoin de Python et de certaines dépendances. Vous pouvez installer les dépendances en utilisant pip :
+To install and run this project, you will need Python and some dependencies. You can install the dependencies using pip:
 
 ```
 pip install -r requirements.txt
 ```
 
-Il faudra également installer :
-- l'extension VsCode [PyMakr](https://marketplace.visualstudio.com/items?itemName=pycom.Pymakr)
-- le driver [CP210X](https://www.silabs.com/developers/usb-to-uart-bridge-vcp-drivers?tab=overview)
+You will also need to install:
+- The VsCode extension [PyMakr](https://marketplace.visualstudio.com/items?itemName=pycom.Pymakr)
+- The driver [CP210X](https://www.silabs.com/developers/usb-to-uart-bridge-vcp-drivers?tab=overview)
 - [esptools](https://github.com/espressif/esptool/)
 
-## Utilisation
+## Usage
 
-Pour utiliser ce projet, vous devrez envoyer le programme dans l'ESP32 :
+To use this project, you will need to send the program to the ESP32:
 
-## 1. Flasher un ESP32 avec MicroPython
+## 1. Flash an ESP32 with MicroPython
 
-1. **Installation de esptool** : esptool est un utilitaire Python pour communiquer avec le bootloader ROM de l'ESP8266 et l'ESP32. Vous pouvez l'installer avec pip :
+1. **Installation of esptool**: esptool is a Python utility to communicate with the ESP8266 and ESP32 ROM bootloader. You can install it with pip:
 
     ```
     pip install esptool
     ```
 
-2. **Téléchargement du firmware MicroPython** : Vous pouvez télécharger le dernier firmware MicroPython pour l'ESP32 depuis le [site officiel de MicroPython](https://micropython.org/download/esp32/). Assurez-vous de choisir le bon firmware en fonction de la disponibilité de la puce SPIRAM sur votre module ESP32.
+2. **Download the MicroPython firmware**: You can download the latest MicroPython firmware for the ESP32 from the [official MicroPython website](https://micropython.org/download/esp32/). Make sure to choose the right firmware based on the availability of the SPIRAM chip on your ESP32 module.
 
-3. **Effacement du flash** : Avant de flasher le nouveau firmware, il est recommandé d'effacer le flash de l'ESP32. Connectez votre ESP32 à votre ordinateur via le câble micro USB, puis exécutez la commande suivante dans votre terminal :
+3. **Erase the flash**: Before flashing the new firmware, it is recommended to erase the ESP32's flash. Connect your ESP32 to your computer via the micro USB cable, then run the following command in your terminal:
 
     ```
     esptool.py --chip esp32 erase_flash
     ```
 
-    Si vous rencontrez des problèmes pour identifier le port de l'ESP32, vous pouvez lister tous les ports disponibles avec la commande `python -m serial.tools.list_ports` sur Windows ou `ls /dev/tty.*` sur macOS et Linux.
+    If you encounter problems identifying the ESP32's port, you can list all available ports with the command `python -m serial.tools.list_ports` on Windows or `ls /dev/tty.*` on macOS and Linux.
 
-4. **Flashing du firmware MicroPython** : Une fois le flash effacé, vous pouvez flasher le firmware MicroPython que vous avez téléchargé. Remplacez `firmware.bin` par le chemin vers le fichier de firmware que vous avez téléchargé :
+4. **Flashing the MicroPython firmware**: Once the flash is erased, you can flash the MicroPython firmware you downloaded. Replace `firmware.bin` with the path to the firmware file you downloaded:
 
     ```
     esptool.py --chip esp32 --port /dev/ttyUSB0 write_flash -z 0x1000 firmware.bin
     ```
 
-    Remplacez `/dev/ttyUSB0` par le port de votre ESP32.
+    Replace `/dev/ttyUSB0` with your ESP32's port.
 
-5. **Vérification de l'installation (optionnel)** : Vous pouvez vérifier que MicroPython a été correctement installé en vous connectant à l'ESP32 via un terminal série. Vous pouvez utiliser le module pyserial de Python pour cela :
+5. **Installation verification (optional)**: You can verify that MicroPython was installed correctly by connecting to the ESP32 via a serial terminal. You can use Python's pyserial module for this:
 
     ```
     pip install pyserial
     python -m serial.tools.miniterm /dev/ttyUSB0 115200
     ```
 
-    Remplacez `/dev/ttyUSB0` par le port de votre ESP32. Une fois connecté, vous devriez voir un prompt `>>>`. Vous pouvez essayer de taper du code Python ici, par exemple `print("Hello, World!")`.
+    Replace `/dev/ttyUSB0` with your ESP32's port. Once connected, you should see a `>>>` prompt. You can try typing Python code here, for example, `print("Hello, World!")`.
 
-## 2. Mettre en place PyMakr
+## 
 
-1. **Installation de l'extension PyMakr** : Ouvrez Visual Studio Code, cliquez sur l'icône des extensions dans la barre latérale, recherchez "PyMakr" et cliquez sur "Install".
+2. Set Up PyMakr
 
-2. **Configuration de l'extension PyMakr** : Après l'installation de l'extension, vous devrez peut-être configurer le port série de votre appareil. Ouvrez le fichier de configuration PyMakr en cliquant sur "File" > "Preferences" > "Settings", puis recherchez "PyMakr". Entrez le nom du port série de votre appareil dans le champ "autoconnect comport".
+1. **Install the PyMakr extension**: Open Visual Studio Code, click on the extensions icon in the sidebar, search for "PyMakr" and click "Install".
 
-3. **Connexion à l'appareil** : Connectez votre appareil à votre ordinateur via le câble micro USB. Dans Visual Studio Code, ouvrez la vue du terminal (View > Terminal) et vous devriez voir un terminal PyMakr. Cliquez sur le bouton "Connect" dans le terminal PyMakr pour vous connecter à votre appareil.
+2. **Configure the PyMakr extension**: After installing the extension, you may need to configure your device's serial port. Open the PyMakr configuration file by clicking on "File" > "Preferences" > "Settings", then search for "PyMakr". Enter your device's serial port name in the "autoconnect comport" field.
 
-4. **Écriture de code** : Vous pouvez maintenant écrire du code Python dans Visual Studio Code. Pour exécuter votre code sur l'appareil, cliquez sur le bouton "Run" dans le terminal PyMakr.
+3. **Connect to the device**: Connect your device to your computer via the micro USB cable. In Visual Studio Code, open the terminal view (View > Terminal) and you should see a PyMakr terminal. Click the "Connect" button in the PyMakr terminal to connect to your device.
 
-5. **Téléchargement de fichiers sur l'appareil** : Vous pouvez télécharger des fichiers sur votre appareil en cliquant sur le bouton "Upload" dans le terminal PyMakr. Sélectionnez les fichiers que vous souhaitez télécharger et ils seront transférés sur votre appareil.
+4. **Write code**: You can now write Python code in Visual Studio Code. To run your code on the device, click the "Run" button in the PyMakr terminal.
 
-6. **Récupération de fichiers depuis l'appareil** : Vous pouvez également récupérer des fichiers depuis votre appareil en cliquant sur le bouton "Download" dans le terminal PyMakr. Sélectionnez les fichiers que vous souhaitez télécharger et ils seront transférés sur votre ordinateur.
+5. **Upload files to the device**: You can upload files to your device by clicking the "Upload" button in the PyMakr terminal. Select the files you want to upload and they will be transferred to your device.
 
+6. **Retrieve files from the device**: You can also retrieve files from your device by clicking the "Download" button in the PyMakr terminal. Select the files you want to download and they will be transferred to your computer.
 
-## 3. Commencer à coder
-Il ne vous reste plus qu'a coder en python dans le fichier main.py et l'envoyer sur l'ESP32 pour l'executer
+## 3. Start Coding
+All that's left is to code in Python in the main.py file and send it to the ESP32 for execution.
