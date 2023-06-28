@@ -244,7 +244,7 @@ class ProximitySensor:
         time.sleep(0.1)
         self.trigger_pin.value(0)
         
-        pulse_time = machine.time_pulse_us(self.echo_pin, 1, 70000)
+        pulse_time = machine.time_pulse_us(self.echo_pin, 1, 80000)
         distance = (pulse_time / 2) / 29.1
         return distance
     

@@ -228,7 +228,7 @@ class ProximitySensor:
         time.sleep(0.1)
         self.trigger_pin.value(0)
         
-        pulse_time = machine.time_pulse_us(self.echo_pin, 1, 75000)
+        pulse_time = machine.time_pulse_us(self.echo_pin, 1, 80000)
         distance = (pulse_time / 2) / 29.1
         return distance
     
@@ -236,7 +236,7 @@ class ProximitySensor:
         distance = self.measure_distance()
         print(distance)
         if distance > 0 :
-            if distance < 400:
+            if distance < 150:
                 return True
             else:
                 return False
@@ -276,8 +276,8 @@ class ProximitySensor:
 
 
 led1 = LedStrip(12, 50, 0, 0)
-led2 = LedStrip(14, 45, 0, 0)
-led3 = LedStrip(27, 48, 0, 0)
+led2 = LedStrip(14, 48, 0, 0)
+led3 = LedStrip(27, 45, 0, 0)
 
 leds = [led1, led2, led3]
 
@@ -287,7 +287,7 @@ for led in leds:
     # led.show()
 
 
-sensor = ProximitySensor(5, 18, [led1, led2, led3])
+sensor = ProximitySensor(18, 5, [led1, led2, led3])
 
 # for led in sensor.leds:
 #     led.stripColor = (0, 0, 255)
