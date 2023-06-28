@@ -81,5 +81,5 @@ Pour utiliser ce projet, vous devrez envoyer le programme dans l'ESP32 :
 6. **Récupération de fichiers depuis l'appareil** : Vous pouvez également récupérer des fichiers depuis votre appareil en cliquant sur le bouton "Download" dans le terminal PyMakr. Sélectionnez les fichiers que vous souhaitez télécharger et ils seront transférés sur votre ordinateur.
 
 
-##3. Commencer à coder
+## 3. Commencer à coder
 Il ne vous reste plus qu'a coder en python dans le fichier main.py et l'envoyer sur l'ESP32 pour l'executer
