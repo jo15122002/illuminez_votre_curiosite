@@ -291,6 +291,8 @@ def randomiseAnswers(ledStrips, upperFish, lowerFish):
     for led in ledStrips:
         index = random.randint(0, len(colors)-1)
         led.stripColor = colors[index]
+        led.set_pixel_color(0, led.stripColor, 1)
+        led.show()
         ledStripsDone.append(led)
         colors.pop(index)
 
@@ -300,7 +302,7 @@ ledStrips = randomiseAnswers(ledStrips, upperFish, lowerFish)
 
 while True:
     for led in ledStrips:
-        led.adaptive_gradually_turn_on(led.stripColor, 5, 0.1)
+        led.adaptive_gradually_turn_on(led.stripColor, 5, 0.33)
 
         if(upperFish.isLit and lowerFish.isLit):
             print("both lit")
@@ -308,7 +310,7 @@ while True:
             lr, lg, lb = lowerFish.stripColor
             while ur < 255 or ug < 255 or ub < 255 or lr < 255 or lg < 255 or lb < 255:
                 for led in ledStrips:
-                    led.adaptive_gradually_turn_on(led.stripColor, 5, 0.1)
+                    led.adaptive_gradually_turn_on(led.stripColor, 5, 0.33)
                 ur += 1
                 ug += 1
                 ub += 1
@@ -339,7 +341,7 @@ while True:
 
             while time.ticks_ms() - timeStart < 5000:
                 for led in ledStrips:
-                    led.adaptive_gradually_turn_on(led.stripColor, 5, 0.1)
+                    led.adaptive_gradually_turn_on(led.stripColor, 5, 0.33)
             
             for led in ledStrips:
                 led.is_right_answer = False
