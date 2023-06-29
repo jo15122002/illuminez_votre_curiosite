@@ -1,25 +1,25 @@
 # La Personnalisation
 
-Une activité pour voir les animaux dans un écosystème
+Activity to show animals in an environement
 
 
-1. Installation et démarrage
+1. Install
 ```js
 npm i
 
-npm run dev // si en mode dev
+npm run // dev (for dev mode)  build (for production)
 ```
 
-2. Utilisation
+2. Use
 
-La page principale (/) doit se trouver sur un écran de 2048 x 1536
+The first page (/) is for 2048 x 1536
 
-La seconde page (/anim) doit se trouver sur un écran de 1920 x 1080
+The second page (/anim) is for 1920 x 1080
 
-Les deux page doivent être ouverte sur le même appareil (un ordinateur en partage d'écran sur une tablette)
+Both pages must be open on the same device (laptop with dual screen on ipad)
 
-3. En utilisation
+3. In use
 
-La page principale (/) sert à entrer le code, voir la carte d'identité, colorier plus nommer son animal et lancer les interaction avec l'environnement
+The first page (/) is for the code, info card, draw, naming and launch interactions.
 
-La page secondaire (/anim) sert pour faire apparaitre les animaux et faire les animations
+The second page (/anim) is to display colored animals and animations.

@@ -12,6 +12,10 @@ Here is a description of the project structure:
 
 - **Reaction_Chimique**: This folder contains the Python scripts for Activity 1. It includes the `reaction_chimique.py` file.
 
+- **Les_Usages**: This folder contains the files for Activity 2.
+
+- **Personnalisation**: This folder contains the files for Activity 3.
+
 ## Installation
 
 To install and run this project, you will need Python and some dependencies. You can install the dependencies using pip:

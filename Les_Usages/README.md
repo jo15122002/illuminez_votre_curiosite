@@ -4,19 +4,18 @@ Une activité pour apprendre pourquoi la bioluminescence est utilisée.
 
 ## Esp 32
 
-1. boot.py connecte l'Esp 32 à internet
+1. boot.py connect Esp 32 to Internet
 
 ```py
-# change pour connecter au bon wifi
+# change to connect to chosen wifi
 
 SSID = "Your Wifi"
 SSI_PASSWORD = "Your Wifi Password"
 
 ```
+2. main.py create websocket server
 
-2. main.py crée un server websocket
-
-3. animals.py reference les animaux, les usage reliés, les pin associé au leds, la couleur des leds, et si la led est alumée et à quelle intencité
+3. animals.py contains animals, uses, pins for the leds, color of leds
 
 
 ## Front
